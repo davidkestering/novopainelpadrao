@@ -1,0 +1,51 @@
+form>div>span.error{
+	color: #dd4b39 !important;
+}
+
+form>div.esconder{
+	display: none;
+}
+
+form>div.mostrar{
+	display: block;
+}
+
+.esconder{
+	display: none;
+}
+
+.mostrar{
+	display: block;
+}
+
+div>span.error{
+	color: #dd4b39 !important;
+}
+
+.col-sm-10.error{
+	color: #dd4b39 !important;
+}
+
+.linkAltera{
+    cursor: pointer;
+}
+
+.linkAlteraLogado{
+    cursor: pointer;
+}
+
+.publicar{
+    cursor: pointer;
+}
+
+.despublicar{
+    cursor: pointer;
+}
+
+.ativar{
+    cursor: pointer;
+}
+
+.desativar{
+    cursor: pointer;
+}

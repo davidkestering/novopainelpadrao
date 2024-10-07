@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {HEAD}
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  {TOPO_PAINEL}
+
+  {MENU_LATERAL}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {PAGINAATUAL}
+      </h1>
+      <ol class="breadcrumb">
+          <li><a href="{CAMINHO}painel/index.php" class="active"><i class="fa fa-dashboard"></i> Home</a></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- BEGIN BLOCO_MENSAGEM -->
+      <div id="mensagem" class="alert alert-{TIPOALERTAMENSAGEM} alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+        {MENSAGEM}
+      </div>
+      <!-- END BLOCO_MENSAGEM -->
+      
+      <!-- Default box -->
+      <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Menu Principal</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- BEGIN BLOCK_MENUP_CELULAS -->
+              <h4 class="box-title">Gerência de Células</h4>
+
+              <!-- BEGIN BLOCK_MENUP_LIDER -->
+              <a class="btn btn-app" href="{LINKMENUPLIDER}"><i class="fa fa-user"></i>Gerência de Líderes</a>
+              <!-- END BLOCK_MENUP_LIDER -->
+
+              <!-- BEGIN BLOCK_MENUP_SUPERVISOR -->
+              <a class="btn btn-app" href="{LINKMENUPSUPERVISOR}"><i class="fa fa-users"></i>Gerência de Supervisores</a>
+              <!-- END BLOCK_MENUP_SUPERVISOR -->
+
+              <!-- BEGIN BLOCK_MENUP_REDE -->
+              <a class="btn btn-app" href="{LINKMENUPREDE}"><i class="fa fa-flag"></i>Gerência de Redes</a>
+              <!-- END BLOCK_MENUP_REDE -->
+
+              <!-- BEGIN BLOCK_MENUP_CELULA -->
+              <a class="btn btn-app" href="{LINKMENUPCELULA}"><i class="fa fa-map-marker"></i>Gerência de Células</a>
+              <!-- END BLOCK_MENUP_CELULA -->
+
+              <!-- END BLOCK_MENUP_CELULAS -->
+
+
+              <!-- BEGIN BLOCK_MENUP_SEMINARIO -->
+              <h4 class="box-title">Gerência de Inscrições</h4>
+
+              <!-- BEGIN BLOCK_MENUP_STATUSRELACIONAMENTO -->
+              <a class="btn btn-app" href="{LINKMENUPSTATUSRELACIONAMENTO}"><i class="fa fa-tag"></i>Gerência de Status de Relacionamentos</a>
+              <!-- END BLOCK_MENUP_STATUSRELACIONAMENTO -->
+
+              <!-- BEGIN BLOCK_MENUP_INSCRICAO -->
+              <a class="btn btn-app" href="{LINKMENUPINSCRICAO}"><i class="fa fa-newspaper-o"></i>Gerência de Inscrições</a>
+              <a class="btn btn-app" href="{LINKMENUPESTATISTICAS}"><i class="fa fa-bar-chart"></i>Estatísticas</a>
+              <!-- END BLOCK_MENUP_INSCRICAO -->
+
+              <!-- END BLOCK_MENUP_SEMINARIO -->
+
+
+              <!-- BEGIN BLOCK_MENUP_ADMINISTRATIVO -->
+              <h4 class="box-title">Área Administrativa</h4>
+              
+                <!-- BEGIN BLOCK_MENUP_ALTERA_SENHA -->
+                <a class="btn btn-app" href="{LINKMENUPALTERASENHA}"><i class="fa fa-lock"></i>Alterar Dados</a>
+                <!-- END BLOCK_MENUP_ALTERA_SENHA -->
+
+                <!-- BEGIN BLOCK_MENUP_USUARIOS -->
+                <a class="btn btn-app" href="{LINKMENUPUSUARIOS}"><i class="fa fa-user"></i>Gerência de Usuários</a>
+                <!-- END BLOCK_MENUP_USUARIOS -->
+
+                <!-- BEGIN BLOCK_MENUP_GRUPO_USUARIOS -->
+                <a class="btn btn-app" href="{LINKMENUPGRUPOUSUARIOS}"><i class="fa fa-users"></i>Gerência de Grupos de Usuários</a>
+                <!-- END BLOCK_MENUP_GRUPO_USUARIOS -->
+
+                <!-- BEGIN BLOCK_MENUP_TRANSACOES -->
+                <a class="btn btn-app" href="{LINKMENUPTRANSACOES}"><i class="fa fa-exchange"></i>Gerência de Transações</a>
+                <!-- END BLOCK_MENUP_TRANSACOES -->
+
+                <!-- BEGIN BLOCK_MENUP_LOG -->
+                <a class="btn btn-app" href="{LINKMENUPLOG}"><i class="fa fa-bullseye"></i>Log de Transações</a>
+                <!-- END BLOCK_MENUP_LOG -->
+
+                <!-- BEGIN BLOCK_MENUP_ERROS -->
+                <a class="btn btn-app" href="{LINKMENUPERROS}"><i class="fa fa-bullhorn"></i>Log de Erros</a>
+                <!-- END BLOCK_MENUP_ERROS -->
+
+                <!-- BEGIN BLOCK_MENUP_ERROS_MYSQL -->
+                <a class="btn btn-app" href="{LINKMENUPERROSMYSQL}"><i class="fa fa-database"></i>Log de Erros de MySql</a>
+                <!-- END BLOCK_MENUP_ERROS_MYSQL -->
+              
+              <!-- END BLOCK_MENUP_ADMINISTRATIVO -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {RODAPE}
+  
+</div>
+<!-- ./wrapper -->
+
+{SCRIPTJS}
+
+</body>
+</html>

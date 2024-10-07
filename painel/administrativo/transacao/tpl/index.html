@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {HEAD}
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  {TOPO_PAINEL}
+
+  {MENU_LATERAL}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {PAGINAATUAL}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{CAMINHO}painel/index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{CAMINHO}painel/administrativo/index.php">Administrativo</a></li>
+        <li class="active">{PAGINAATUAL}</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- BEGIN BLOCO_MENSAGEM -->
+      <div id="mensagem" class="alert alert-{TIPOALERTAMENSAGEM} alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+        {MENSAGEM}
+      </div>
+      <!-- END BLOCO_MENSAGEM -->
+
+      <!-- Default box -->
+      <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Transações
+                <br><br>
+                <a class="btn btn-app" href="insere_altera.php">
+                  <i class="fa fa-edit"></i> Cadastrar
+                </a>
+                <a class="btn btn-app" id="delMassa">
+                  <i class="fa fa-trash"></i> Excluir
+                </a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form id="formIndexTransacao" method="post" action="processa.php">
+                <input type="hidden" name="sOP" value="Excluir" />
+                <table id="dadosTransacoes" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th><input id="select_all" type="checkbox" /> ID</th>
+                    <th>Categoria de Transações</th>
+                    <th>Transação</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <!-- BEGIN BLOCO_TRANSACAO -->
+                  <tr> 
+                      <td><input type="checkbox" class="checkbox-transacoes" name="fIdCategoriaTipoTransacao[]" value="{IDCATEGORIATRANSACAO}" /> {IDCATEGORIATRANSACAO}</td>
+                      <td class="linkAltera" id="{IDCATEGORIATRANSACAO}">{CATEGORIATRANSACAO}</td>
+                      <td class="linkAltera" id="{IDCATEGORIATRANSACAO}">
+                        <!-- BEGIN BLOCO_ACAO -->
+                        {TRANSACAO}
+                          <!-- END BLOCO_ACAO -->
+                      </td> 
+                  </tr> 
+                  <!-- END BLOCO_TRANSACAO -->
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Categoria de Transações</th>
+                    <th>Transação</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {RODAPE}
+  
+</div>
+<!-- ./wrapper -->
+
+{SCRIPTJS}
+
+<script type="text/javascript">
+  //select all checkboxes
+  $("#select_all").change(function(){  //"select all" change 
+      $(".checkbox-transacoes").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
+  });
+
+  //".checkbox" change 
+  $('.checkbox-transacoes').change(function(){ 
+    //uncheck "select all", if one of the listed checkbox item is unchecked
+      if(false == $(this).prop("checked")){ //if this item is unchecked
+          $("#select_all").prop('checked', false); //change "select all" checked status to false
+      }
+    //check "select all" if all checkbox items are checked
+    if ($('.checkbox-transacoes:checked').length == $('.checkbox-transacoes').length ){
+      $("#select_all").prop('checked', true);
+    }
+  });
+
+  $('.linkAltera').click(function(){
+    window.open("insere_altera.php?nIdCategoriaTipoTransacao="+$(this).attr('id'),"_self");
+  });
+
+  $(document).ready( function() {
+    $('#dadosTransacoes').dataTable( {
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos os Registros"]],
+      "order": [[1,'asc']],
+      "columnDefs": [
+      { "orderable": false, "targets": [ 0 ] }
+    ]});
+  });
+
+  $('#delMassa').click(function(){
+    var vCheckbox = $("input[type='checkbox']:checked");
+    var nQtdChecked = 0;
+    if(vCheckbox.length == 0)
+      alert("Para exluir, primeiro selecione as categorias de transações!");
+    else{
+      $.each(vCheckbox,function(i,j){
+        if(j.value != 'on')
+          nQtdChecked = nQtdChecked + 1;
+      });
+      
+      if(nQtdChecked > 0){
+        var resp = confirm("Tem certeza que desejas excluir "+nQtdChecked+" categorias de transações?");
+        if(resp == true){
+          $("#formIndexTransacao").submit();
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

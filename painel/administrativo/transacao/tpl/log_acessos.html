@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {HEAD}
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  {TOPO_PAINEL}
+
+  {MENU_LATERAL}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {PAGINAATUAL}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{CAMINHO}painel/index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{CAMINHO}painel/administrativo/">Administrativo</a></li>
+        <li class="active">{PAGINAATUAL}</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- BEGIN BLOCO_MENSAGEM -->
+      <div id="mensagem" class="alert alert-{TIPOALERTAMENSAGEM} alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+        {MENSAGEM}
+      </div>
+      <!-- END BLOCO_MENSAGEM -->
+
+      <!-- Default box -->
+      <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista com Log de Acessos</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="dadosLogErros" class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Id Log</th>
+                  <th>Usuário</th>
+                  <th>Área - Ação</th>
+                  <th>ID Objeto</th>
+                  <th>Objeto</th>
+                  <th>Campo</th>
+                  <th>Valor Antigo</th>
+                  <th>Valor Novo</th>
+                  <th>IP</th>
+                  <th>Data do Log</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- BEGIN BLOCO_LOG_ERROS -->
+                <tr> 
+                    <td>{IDLOG}</td> 
+                    <td>{USUARIO}</td>
+                    <td>{AREA}-{ACAO}</td> 
+                    <td>{IDOBJETO}</td>
+                    <td>{OBJETO}</td>
+                    <td>{CAMPO}</td>
+                    <td>{VALOR_ANTIGO}</td>
+                    <td>{VALOR_NOVO}</td>
+                    <td>{IP}</td>
+                    <td>{DATAHORA}</td>
+                </tr> 
+                <!-- END BLOCO_LOG_ERROS -->
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Id Log</th>
+                  <th>Usuário</th>
+                  <th>Área - Ação</th>
+                  <th>ID Objeto</th>
+                  <th>Objeto</th>
+                  <th>Campo</th>
+                  <th>Valor Antigo</th>
+                  <th>Valor Novo</th>
+                  <th>IP</th>
+                  <th>Data do Log</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {RODAPE}
+  
+</div>
+<!-- ./wrapper -->
+
+{SCRIPTJS}
+
+<script type="text/javascript">
+  $(document).ready( function() {
+    $('#dadosLogErros').dataTable( {
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos os Registros"]],
+      "order": [[9,'desc'], [0,'desc']],
+      "columnDefs": [
+      { "orderable": true, "targets": [ 0 ] }
+    ]});
+  });
+</script>
+
+</body>
+</html>

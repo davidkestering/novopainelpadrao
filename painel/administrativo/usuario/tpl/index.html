@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {HEAD}
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  {TOPO_PAINEL}
+
+  {MENU_LATERAL}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {PAGINAATUAL}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{CAMINHO}painel/index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{CAMINHO}painel/administrativo/index.php">Administrativo</a></li>
+        <li class="active">{PAGINAATUAL}</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- BEGIN BLOCO_MENSAGEM -->
+      <div id="mensagem" class="alert alert-{TIPOALERTAMENSAGEM} alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+        {MENSAGEM}
+      </div>
+      <!-- END BLOCO_MENSAGEM -->
+
+      <!-- Default box -->
+      <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Usuários
+                <br><br>
+                <a class="btn btn-app" href="insere_altera.php">
+                  <i class="fa fa-edit"></i> Cadastrar
+                </a>
+                <a class="btn btn-app" id="delMassa">
+                  <i class="fa fa-trash"></i> Excluir
+                </a>
+              </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form id="formIndexUsuario" method="post" action="processa.php">
+                <input type="hidden" name="sOP" value="Excluir" />
+                <table id="dadosUsuarios" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th><input id="select_all" type="checkbox" /> ID</th>
+                    <th>Grupo de Usuário</th>
+                    <th>Nome</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Logado  (Liberar novo Login)</th>
+                    <th>Data de Criação</th>
+                    <th>Publicado</th>
+                    <th>Ativo</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <!-- BEGIN BLOCO_USUARIOS -->
+                  <tr> 
+                      <td id="{IDUSUARIO}"><input type="checkbox" class="checkbox-usuarios" name="fIdUsuario[]" value="{IDUSUARIO}" /> {IDUSUARIO}</td> 
+                      <td class="linkAltera" id="{IDUSUARIO}">{GRUPO}</td>
+                      <td class="linkAltera" id="{IDUSUARIO}">{NOME}</td>
+                      <td class="linkAltera" id="{IDUSUARIO}">{LOGIN}</td>
+                      <td class="linkAltera" id="{IDUSUARIO}">{EMAIL}</td>
+                      <td class="linkAlteraLogado" id="{IDUSUARIO}"><div id="label_{IDUSUARIO}">{LOGADO}</div></td>
+                      <td class="linkAltera" id="{IDUSUARIO}">{DATA_CRIACAO}</td> 
+                      <td id="{IDUSUARIO}">{PUBLICADO}</td> 
+                      <td id="{IDUSUARIO}">{ATIVO}</td>
+                  </tr> 
+                  <!-- END BLOCO_USUARIOS -->
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Grupo de Usuário</th>
+                    <th>Nome</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Logado</th>
+                    <th>Data de Criação</th>
+                    <th>Publicado</th>
+                    <th>Ativo</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {RODAPE}
+  
+</div>
+<!-- ./wrapper -->
+
+{SCRIPTJS}
+
+<script type="text/javascript">
+  //select all checkboxes
+  $("#select_all").change(function(){  //"select all" change 
+      $(".checkbox-usuarios").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
+  });
+
+  //".checkbox" change 
+  $('.checkbox-usuarios').change(function(){ 
+    //uncheck "select all", if one of the listed checkbox item is unchecked
+      if(false == $(this).prop("checked")){ //if this item is unchecked
+          $("#select_all").prop('checked', false); //change "select all" checked status to false
+      }
+    //check "select all" if all checkbox items are checked
+    if ($('.checkbox-usuarios:checked').length == $('.checkbox-usuarios').length ){
+      $("#select_all").prop('checked', true);
+    }
+  });
+
+  $('.despublicar').click(function(){
+    crud($(this).attr('id'),'index.php','publicar','publicarUsuario','includes/publica.php','Usuário');
+  });
+  $('.publicar').click(function(){
+    crud($(this).attr('id'),'index.php','despublicar','despublicarUsuario','includes/publica.php','Usuário');
+  });
+  $('.desativar').click(function(){
+    crud($(this).attr('id'),'index.php','ativar','ativarUsuario','includes/ativa.php','Usuário');
+  });
+  $('.ativar').click(function(){
+    crud($(this).attr('id'),'index.php','desativar','desativarUsuario','includes/ativa.php','Usuário');
+  });
+
+  $('.linkAltera').click(function(){
+    window.open("insere_altera.php?nIdUsuario="+$(this).attr('id'),"_self");
+  });
+
+  $('.linkAlteraLogado').click(function(){
+    crud($(this).attr('id'),'index.php','liberar','liberarUsuario','includes/liberaUsuario.php','Usuário');
+  });
+
+  $(document).ready( function() {
+    $('#dadosUsuarios').dataTable( {
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos os Registros"]],
+      "order": [[2,'asc']],
+      "columnDefs": [
+      { "orderable": false, "targets": [ 0 ] }
+    ]});
+  });
+
+  $('#delMassa').click(function(){
+    var vCheckbox = $("input[type='checkbox']:checked");
+    var nQtdChecked = 0;
+    if(vCheckbox.length == 0)
+      alert("Para exluir, primeiro selecione os usuários!");
+    else{
+      $.each(vCheckbox,function(i,j){
+        if(j.value != 'on')
+          nQtdChecked = nQtdChecked + 1;
+      });
+      
+      if(nQtdChecked > 0){
+        var resp = confirm("Tem certeza que desejas excluir "+nQtdChecked+" usuário(s)?");
+        if(resp == true){
+          $("#formIndexUsuario").submit();
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

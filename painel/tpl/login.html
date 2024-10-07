@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{HEAD}
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <b>Sistema Online</b>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Entre para iniciar uma nova sessão!</p>
+
+    <form id="formLogin" name="formLogin">
+		<input type="hidden" id="sOP" name="sOP" value="Logar" />
+		<div id="mensagem" class="alert alert-danger alert-dismissible {CLASSEMENSAGEM}">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			<h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+			{MENSAGEM}
+		</div>
+		<div class="form-group has-feedback">
+		<input type="text" id="fLogin" name="fLogin" class="form-control validate[required]" placeholder="Login">
+		<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+		</div>
+		<div class="form-group has-feedback">
+		<input type="password" id="fSenha" name="fSenha" class="form-control validate[required]" placeholder="Senha">
+		<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+		</div>
+		<div class="row">
+		<div class="col-xs-12">
+		  <button type="button" id="btnAcessar" class="btn btn-primary btn-block btn-flat">Acessar</button>
+		<!-- /.col -->
+		</div>
+    </form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+{SCRIPTJS}
+<script>
+	jQuery(document).ready(function(){
+		jQuery("#formLogin").validationEngine();
+	});
+	
+	$(function () {
+		$('#btnAcessar').click(function(){
+			efetuarLogin();
+		});
+
+		$('input').keypress(function(e) {
+			if(e.keyCode == 13) {
+				efetuarLogin();
+			}
+		});
+	});
+
+	function efetuarLogin(){
+		//alert("AQUI");
+		$.gritter.removeAll();
+		var dados = $('#formLogin').serialize();
+
+		$.gritter.add({
+			// (string | mandatory) the heading of the notification
+			title: '<div class="alert alert-info alert-dismissible" style="margin-top:14px;"><i class="fa fa-refresh fa-spin"></i> Tentando fazer login, aguarde...</div>',
+			// (string | mandatory) the text inside the notification
+			//text: 'The callback is...',
+			//class_name: 'gritter-light',
+			// Stickeh!
+			sticky: false,
+			// (string | optional) the image to display on the left
+			//image: '../../../../sistema/images/Spinner-1s-200px.svg',
+			// (function | optional) function called before it opens
+			before_open: function(){
+				//alert('I am called before it opens');
+			},
+			// (function | optional) function called after it opens
+			after_open: function(e){
+				//alert("I am called after it opens: \nI am passed the jQuery object for the created Gritter element...\n" + e);
+				$.post('administrativo/login/processa.php',dados,function(resp){
+					var vResp = resp.split("_");
+					//console.log(vResp[1]);
+					switch(vResp[0]){
+						case "0":
+							
+							$("#mensagem").remove();
+							$(".mensagem").remove();
+							$("#formLogin").prepend('<div class="mensagem alert alert-danger alert-dismissible mostrar"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-ban"></i> Alerta!</h4>'+vResp[1]+'</div>');
+							$.gritter.add({
+								title: '<div class="alert alert-danger alert-dismissible" style="margin-top:14px;"><i class="icon fa fa-ban"></i> '+vResp[1]+'</div>',
+								time: 1000
+							});
+						break;
+						case "1":
+							$.gritter.add({
+								title: '<div class="alert alert-success alert-dismissible" style="margin-top:14px;"><i class="icon fa fa-check"></i> Login efetuado com sucesso! Aguarde redirecionamento...</div>',
+								time: 1000
+							});
+						break;
+						case "2":
+							$("#mensagem").remove();
+							$(".mensagem").remove();
+							$("#formLogin").prepend('<div class="mensagem alert alert-danger alert-dismissible mostrar"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h4><i class="icon fa fa-ban"></i> Alerta!</h4>'+vResp[1]+'</div>');
+							$.gritter.add({
+								title: '<div class="alert alert-danger alert-dismissible" style="margin-top:14px;"><i class="icon fa fa-ban"></i> '+vResp[1]+'</div>',
+								time: 1000
+							});
+						break;
+					}
+				});
+			},
+			// (function | optional) function called before it closes
+			before_close: function(e, manual_close){
+                //var manually = (manual_close) ? 'The "X" was clicked to close me!' : '';
+				//alert("I am called before it closes: I am passed the jQuery object for the Gritter element... \n" + manually);
+				$.gritter.add({
+					title: '<div class="alert alert-info alert-dismissible" style="margin-top:14px;"><i class="fa fa-refresh fa-spin"></i> Recarregando a página, por favor aguarde!</div>',
+					time: 1000
+				});
+			},
+			// (function | optional) function called after it closes
+			after_close: function(e, manual_close){
+                //var manually = (manual_close) ? 'The "X" was clicked to close me!' : '';
+				//alert('I am called after it closes. ' + manually);
+				window.open('index.php','_self');
+			},
+			// (int | optional) the time you want it to be alive for before fading out
+			time: 3000
+		});
+
+
+		
+	}
+
+	function liberaUsuario(nIdUsuario){
+		$(function() {
+			$.ajax({
+				type: "POST",
+				url: "includes/libera_usuario.php",
+				data: "fIdUsuario="+nIdUsuario,
+				success: function(msg){
+					alert(msg);
+					$("#mensagem").remove();
+					$(".mensagem").remove();
+				}
+			});
+		});
+	}
+
+  
+</script>
+</body>
+</html>

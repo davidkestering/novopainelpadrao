@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {HEAD}
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  {TOPO_PAINEL}
+
+  {MENU_LATERAL}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {PAGINAATUAL}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{CAMINHO}painel/index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{CAMINHO}painel/administrativo/index.php">Administrativo</a></li>
+        <li class="active">{PAGINAATUAL}</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- BEGIN BLOCO_MENSAGEM -->
+      <div id="mensagem" class="alert alert-{TIPOALERTAMENSAGEM} alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+        {MENSAGEM}
+      </div>
+      <!-- END BLOCO_MENSAGEM -->
+
+      <!-- Default box -->
+      <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Grupos de Usuários
+                <br><br>
+                <a class="btn btn-app" href="insere_altera.php">
+                  <i class="fa fa-edit"></i> Cadastrar
+                </a>
+                <a class="btn btn-app" id="delMassa">
+                  <i class="fa fa-trash"></i> Excluir
+                </a>
+              </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form id="formIndexGrupoUsuario" method="post" action="processa.php">
+                <input type="hidden" name="sOP" value="Excluir" />
+                <table id="dadosGrupoUsuarios" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th><input id="select_all" type="checkbox" /> ID</th>
+                    <th>Grupo de Usuário</th>
+                    <th>Data de Criação</th>
+                    <th>Publicado</th>
+                    <th>Ativo</th>
+                    <th>Permissões</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <!-- BEGIN BLOCO_GRUPO_USUARIOS -->
+                    <tr> 
+                        <td id="{IDGRUPOUSUARIO}"><input type="checkbox" class="checkbox-grupousuarios" name="fIdGrupoUsuario[]" value="{IDGRUPOUSUARIO}" /> {IDGRUPOUSUARIO}</td> 
+                      <td class="linkAltera" id="{IDGRUPOUSUARIO}">{GRUPO}</td>
+                      <td class="linkAltera" id="{IDGRUPOUSUARIO}">{DATA_CRIACAO}</td> 
+                      <td id="{IDGRUPOUSUARIO}">{PUBLICADO}</td> 
+                      <td id="{IDGRUPOUSUARIO}">{ATIVO}</td>
+                      <td><a href="{CAMINHO}painel/administrativo/permissao/insere_altera.php?nIdGrupoUsuario={IDGRUPOUSUARIO}"><img src="{CAMINHO}images/edit.png" ></a></td>
+                    </tr> 
+                    <!-- END BLOCO_GRUPO_USUARIOS -->
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Grupo de Usuário</th>
+                    <th>Data de Criação</th>
+                    <th>Publicado</th>
+                    <th>Ativo</th>
+                    <th>Permissões</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {RODAPE}
+  
+</div>
+<!-- ./wrapper -->
+
+{SCRIPTJS}
+
+<script type="text/javascript">
+  //select all checkboxes
+  $("#select_all").change(function(){  //"select all" change 
+      $(".checkbox-grupousuarios").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
+  });
+
+  //".checkbox" change 
+  $('.checkbox-grupousuarios').change(function(){ 
+    //uncheck "select all", if one of the listed checkbox item is unchecked
+      if(false == $(this).prop("checked")){ //if this item is unchecked
+          $("#select_all").prop('checked', false); //change "select all" checked status to false
+      }
+    //check "select all" if all checkbox items are checked
+    if ($('.checkbox-grupousuarios:checked').length == $('.checkbox-grupousuarios').length ){
+      $("#select_all").prop('checked', true);
+    }
+  });
+
+    $('.despublicar').click(function(){
+        crud($(this).attr('id'),'index.php','publicar','publicarGrupoUsuario','includes/publica.php','Grupo de Usuário');
+    });
+    $('.publicar').click(function(){
+        crud($(this).attr('id'),'index.php','despublicar','despublicarGrupoUsuario','includes/publica.php','Grupo de Usuário');
+    });
+    $('.desativar').click(function(){
+        crud($(this).attr('id'),'index.php','ativar','ativarGrupoUsuario','includes/ativa.php','Grupo de Usuário');
+    });
+    $('.ativar').click(function(){
+        crud($(this).attr('id'),'index.php','desativar','desativarGrupoUsuario','includes/ativa.php','Grupo de Usuário');
+    });
+
+    $('.linkAltera').click(function(){
+        window.open("insere_altera.php?nIdGrupoUsuario="+$(this).attr('id'),"_self");
+    });
+
+    $(document).ready( function() {
+      $('#dadosGrupoUsuarios').dataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos os Registros"]],
+        "order": [[1,'asc']],
+        "columnDefs": [
+        { "orderable": false, "targets": [ 0 ] }
+      ]});
+    });
+
+  $('#delMassa').click(function(){
+    var vCheckbox = $("input[type='checkbox']:checked");
+    var nQtdChecked = 0;
+    if(vCheckbox.length == 0)
+      alert("Para exluir, primeiro selecione os grupos de usuários!");
+    else{
+      $.each(vCheckbox,function(i,j){
+        if(j.value != 'on')
+          nQtdChecked = nQtdChecked + 1;
+      });
+      
+      if(nQtdChecked > 0){
+        var resp = confirm("Tem certeza que desejas excluir "+nQtdChecked+" grupos de usuário(s)?");
+        if(resp == true){
+          $("#formIndexGrupoUsuario").submit();
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

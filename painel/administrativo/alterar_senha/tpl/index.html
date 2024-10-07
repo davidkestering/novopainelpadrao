@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {HEAD}
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  {TOPO_PAINEL}
+
+  {MENU_LATERAL}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {PAGINAATUAL}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{CAMINHO}painel/index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{CAMINHO}painel/administrativo/index.php">Administrativo</a></li>
+        <li class="active">{PAGINAATUAL}</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- BEGIN BLOCO_MENSAGEM -->
+      <div id="mensagem" class="alert alert-{TIPOALERTAMENSAGEM} alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa {TIPOALERTALOGO}"></i> Alerta!</h4>
+        {MENSAGEM}
+      </div>
+      <!-- END BLOCO_MENSAGEM -->
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="box box-primary">
+            <form role="form" action="processa.php" id="formUsuario" method="post">
+              <div class="box-body">
+                <input type="hidden" name="sOP" value="{ACAO}" />
+                <input type="hidden" name="fIdUsuario" value="{IDUSUARIO}">
+                <div class="form-group has-feedback">
+                    <label>Nome: {NOME}</label>
+                </div>
+                <div class="form-group has-feedback">
+                    <label>Email: {EMAIL}</label>
+                </div>
+                <div class="form-group has-feedback">
+                    <label>Grupo de Usuários: {GRUPOUSUARIO}</label>
+                </div>
+                <div class="form-group has-feedback">
+                    <label>Login: {LOGIN}</label>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="fSenha">Senha:</label>
+                    <input type="password" class="form-control {VALIDASENHA}" id="fSenha" name="fSenha" placeholder="Senha" maxlength="20">
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="fSenhaConfirmacao">Confirme a senha:</label>
+                    <input type="password" class="form-control validate[equals[fSenha]]" id="fSenhaConfirmacao" name="fSenhaConfirmacao" placeholder="Repita a senha" maxlength="20">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Alterar Dados" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {RODAPE}
+  
+</div>
+<!-- ./wrapper -->
+
+{SCRIPTJS}
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery("#formUsuario").validationEngine();
+    });
+</script>
+
+</body>
+</html>
